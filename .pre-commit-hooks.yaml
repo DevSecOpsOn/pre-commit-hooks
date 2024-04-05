@@ -1,0 +1,6 @@
+-   id: pluto_detect_files
+    name: pluto detect-files
+    description: Search for deprecated Kubernetes API(s) in files
+    entry: hooks/pluto_check_files.sh
+    language: script
+    require_serial: true
