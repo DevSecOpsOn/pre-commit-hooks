@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 set -eo pipefail
 
 # global variables
@@ -82,3 +83,4 @@ pluto_detect_files_() {
 }
 
 [[ ${BASH_SOURCE[0]} != "$0" ]] || main "$@"
+
