@@ -5,3 +5,4 @@
     language: script
     require_serial: true
     files: (\.yml|\.yaml)$
+    args: []
