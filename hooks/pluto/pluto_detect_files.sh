@@ -2,18 +2,17 @@
 
 set -eo pipefail
 
-# global variables
-declare -a ARGS=()
-declare -a FILES=()
-declare -a PARAMS="detect-files --output markdown"
+PARAMS="detect-files -o markdown "
 
-readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
-. "$SCRIPT_DIR/common.sh"
+# Import external functions
+readonly SCRIPT_DIR="$(cd .. "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+source "$SCRIPT_DIR/initialize.sh"
+source "$SCRIPT_DIR/parse_cmdline.sh"
 
 main() {
 
   initialize_
-  parse_cmdline_ "$@"
+  pluto::detect_files_ "$@"
   pluto_detect_files_ "$ARGS" "$FILES"
 
 }
@@ -28,14 +27,9 @@ pluto_detect_files_() {
 
   for i in "${ARGS[@]}"
   do
-   PARAMS="${PARAMS} ${i}"
-  done
-
-  echo $PARAMS
-
-  for path_uniq in $(echo "${paths[*]}" | tr ' ' '\n' | sort -u); do
-    path_uniq="${path_uniq//__REPLACED__SPACE__/ }"
+    PARAMS="${PARAMS} ${i}"
     pushd "$path_uniq" > /dev/null
+    echo $PARAMS
     pluto $PARAMS
     popd > /dev/null
   done

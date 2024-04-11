@@ -1,7 +1,15 @@
 -   id: pluto_detect_files
     name: pluto detect-files
     description: Search for deprecated Kubernetes API(s) in files
-    entry: hooks/pluto_detect_files.sh
+    entry: hooks/pluto/pluto_detect_files.sh
+    language: script
+    require_serial: true
+    files: (\.yml|\.yaml)$
+    args: []
+-   id: pluto_detect_helm
+    name: pluto detect-helm
+    description: Search for deprecated helm charts in Kubernetes
+    entry: hooks/pluto/pluto_detect_helm.sh
     language: script
     require_serial: true
     files: (\.yml|\.yaml)$

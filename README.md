@@ -31,16 +31,19 @@ repos:
     rev: master
     hooks:
       - id: pluto_detect_files
-        args: [ <your-charts-folder> ]
+        args: [ "-d <your-charts-folder>" ]
+        verbose: true #optional
+      - id: pluto_detect_helm
+        args: [ "-k <kubernetes-context>" ]
         verbose: true #optional
 ```
 
 > Remember to setup your default_stages to have a better control on how trigger the hook
 
-3. **Initialization**: Run `pre-commit install` to set up the hooks in your repository.
+1. **Initialization**: Run `pre-commit install` to set up the hooks in your repository.
    1. Stay up to date run `pre-commit autoupdate` and don't miss improves, features, andfixes updates.
 
-4. **Usage**:
+2. **Usage**:
 
 Commit your changes as usual. Our pre-commit hooks will automatically run before each commit, checking for any issues or violations.
 
@@ -48,6 +51,8 @@ Commit your changes as usual. Our pre-commit hooks will automatically run before
 
 - pluto detect-files
   - Search for kubernetes deprecated APIs in files
+- pluto detect-helm
+  - Search for deprecated helm charts in kubernetes
 
 ## Contributions
 
