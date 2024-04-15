@@ -1,16 +1,24 @@
--   id: pluto_detect_files
-    name: pluto detect-files
-    description: Search for deprecated Kubernetes API(s) in files
-    entry: hooks/pluto/pluto_detect_files.sh
-    language: script
-    require_serial: true
-    files: (\.yml|\.yaml)$
-    args: []
--   id: pluto_detect_helm
-    name: pluto detect-helm
-    description: Search for deprecated helm charts in Kubernetes
-    entry: hooks/pluto/pluto_detect_helm.sh
-    language: script
-    require_serial: true
-    files: (\.yml|\.yaml)$
-    args: []
+- id: pluto_detect_files
+  name: pluto detect-files
+  description: Search for deprecated Kubernetes API(s) in files
+  entry: hooks/pluto/pluto_detect_files.sh
+  language: script
+  require_serial: true
+  files: (\.yml|\.yaml)$
+  args: []
+
+- id: pluto_detect_helm
+  name: pluto detect-helm
+  description: Search for deprecated helm charts in Kubernetes
+  entry: hooks/pluto/pluto_detect_helm.sh
+  language: script
+  require_serial: true
+  files: (\.yml|\.yaml)$
+  args: []
+
+- id: nova_search_updates
+  name: nova check for updated chart releases.
+  description: A fairwinds tool to check for updated chart releases
+  entry: hooks/pluto/nova_search_updates.sh
+  require_serial: true
+  args: []
