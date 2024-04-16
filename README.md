@@ -31,16 +31,16 @@ repos:
     rev: master
     hooks:
       - id: pluto_detect_files
-        args: [ "<your-charts-folder>" ]
+        args: [ -d helm_charts --output markdown ]
         verbose: true #optional
       - id: pluto_detect_helm
-        args: [ "<kubernetes-context>" ]
+        args: [ -k <cluster-context> --output markdown ]
         verbose: true #optional
       - id: pluto_detect_api
-        args: [ "<k8s_version=version>" ]
+        args: [ --output markdown --target_version k8s_version=v1.20.0 ]
         verbose: true #optional
       - id: nova_search_updates
-        args: [ "<kubernetes-context>" ]
+        args: [ -k <cluster-context> --format table ]
         verbose: true #optional
 ```
 

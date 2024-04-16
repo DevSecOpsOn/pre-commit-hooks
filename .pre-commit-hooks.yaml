@@ -1,3 +1,8 @@
+---
+
+# For use with pre-commit.
+# See usage instructions at http://pre-commit.com
+
 - id: pluto_detect_files
   name: pluto detect-files
   description: Search for deprecated Kubernetes API(s) in files
