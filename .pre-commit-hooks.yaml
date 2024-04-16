@@ -16,6 +16,15 @@
   files: (\.yml|\.yaml)$
   args: []
 
+- id: pluto_detect_api
+  name: pluto detect-helm
+  description: Detect Kubernetes apiVersions from an active cluster.
+  entry: hooks/pluto/pluto_detect_api.sh
+  language: script
+  require_serial: true
+  files: (\.yml|\.yaml)$
+  args: []
+
 - id: nova_search_updates
   name: nova check for updated chart releases.
   description: A fairwinds tool to check for updated chart releases
