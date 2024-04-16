@@ -2,9 +2,6 @@
 
 set -eo pipefail
 
-declare -a ARGS=()
-declare -a FILES=()
-
 initialize_() {
 
   local dir
