@@ -76,12 +76,6 @@ nova::search_updates_() {
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
-      --)
-        shift
-        # shellcheck disable=SC2034 # Variable is used
-        FILES=("$@")
-        break
-      ;;
     esac
   done
 
