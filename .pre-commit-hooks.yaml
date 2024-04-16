@@ -22,7 +22,7 @@
   args: []
 
 - id: pluto_detect_api
-  name: pluto detect-helm
+  name: pluto detect-api-resources
   description: Detect Kubernetes apiVersions from an active cluster.
   entry: hooks/pluto/pluto_detect_api.sh
   language: script
@@ -39,7 +39,7 @@
   args: []
 
 - id: popeye_scan
-  name: popeye scanning
+  name: popeye scan
   description: Scans your Kubernetes clusters and reports potential resource issues
   entry: hooks/popeye/popeye_scan.sh
   language: script
