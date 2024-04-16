@@ -6,9 +6,9 @@ set -eo pipefail
 PARAMS="find -a "
 
 # Import external functions
-readonly SCRIPT_DIR="$(cd .. "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
-source "$SCRIPT_DIR/initialize.sh"
-source "$SCRIPT_DIR/parse_cmdline.sh"
+readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+source "$SCRIPT_DIR/../initialize.sh"
+source "$SCRIPT_DIR/../parse_cmdline.sh"
 
 main() {
 

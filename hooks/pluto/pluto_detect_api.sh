@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-PARAMS="detect-helm -o markdown "
+PARAMS="detect-api-resources -o markdown "
 
 # Import external functions
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
@@ -12,12 +12,12 @@ source "$SCRIPT_DIR/../parse_cmdline.sh"
 main() {
 
   initialize_
-  pluto::detect_helm_ "$@"
-  pluto_detect_helm_ "$ARGS" "$FILES"
+  pluto::detect_api_ "$@"
+  pluto_detect_api_ "$ARGS" "$FILES"
 
 }
 
-pluto_detect_helm_() {
+pluto_detect_api_() {
 
   for file_with_path in $FILES; do
     file_with_path="${file_with_path// /__REPLACED__SPACE__}"

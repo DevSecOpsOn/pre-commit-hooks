@@ -6,7 +6,7 @@ set -eo pipefail
 declare -a ARGS=()
 declare -a FILES=()
 
-declare -a context namespace k8s_version format
+declare -a context namespace k8s_version format removed
 
 pluto::detect_files_() {
 
@@ -51,6 +51,22 @@ pluto::detect_helm_() {
         FILES=("$@")
         break
       ;;
+    esac
+  done
+
+}
+
+pluto::detect_api_() {
+
+  while getopts tr api; do
+    case $api in
+      t | --target-versions)
+        k8s_version=${OPTARG}
+        ARGS+=("$k8s_version ")
+      ;;
+      r | --only-show-removed)
+        removed=${OPTARG}
+        ARGS+=($"$removed ")
     esac
   done
 
