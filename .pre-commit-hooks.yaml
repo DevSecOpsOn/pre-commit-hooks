@@ -19,7 +19,7 @@
 - id: nova_search_updates
   name: nova check for updated chart releases.
   description: A fairwinds tool to check for updated chart releases
-  entry: hooks/pluto/nova_search_updates.sh
+  entry: hooks/nova/nova_search_updates.sh
   language: script
   require_serial: true
   args: []
