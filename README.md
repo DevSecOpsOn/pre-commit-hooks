@@ -31,10 +31,16 @@ repos:
     rev: master
     hooks:
       - id: pluto_detect_files
-        args: [ "-d <your-charts-folder>" ]
+        args: [ "<your-charts-folder>" ]
         verbose: true #optional
       - id: pluto_detect_helm
-        args: [ "-k <kubernetes-context>" ]
+        args: [ "<kubernetes-context>" ]
+        verbose: true #optional
+      - id: pluto_detect_api
+        args: [ "<k8s_version=version>" ]
+        verbose: true #optional
+      - id: nova_search_updates
+        args: [ "<kubernetes-context>" ]
         verbose: true #optional
 ```
 
