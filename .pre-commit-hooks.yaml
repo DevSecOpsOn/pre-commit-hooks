@@ -32,3 +32,11 @@
   language: script
   require_serial: true
   args: []
+
+- id: popeye_scan
+  name: popeye scanning
+  description: Scans your Kubernetes clusters and reports potential resource issues
+  entry: hooks/popeye/popeye_scan.sh
+  language: script
+  require_serial: true
+  args: []

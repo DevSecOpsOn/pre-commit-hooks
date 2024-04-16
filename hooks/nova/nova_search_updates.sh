@@ -3,7 +3,7 @@
 set -eo pipefail
 
 # global variables
-PARAMS="find -a "
+PARAMS="find "
 
 # Import external functions
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
