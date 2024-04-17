@@ -124,16 +124,20 @@ popeye::scan_resources_() {
   while getopts o:kAs popeye; do
     case $popeye in
       A | --all-namespaces)
-        ARGS+=${OPTARG}
+        namespace=${OPTARG}
+        ARGS+=("$namespace ")
       ;;
       k | --context)
-        ARGS+=${OPTARG}
+        context=${OPTARG}
+        ARGS+=("$context ")
       ;;
       s | --min-score)
-        ARGS+=$OPTARG
+        score=$OPTARG
+        ARGS+=("$score ")
       ;;
       o | --out)
-        ARGS+=${OPTARG}
+        format=${OPTARG}
+        ARGS+=("$format ")
       ;;
       --save)
         ARGS+="$@ "
