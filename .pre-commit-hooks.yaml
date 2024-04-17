@@ -5,7 +5,7 @@
 
 - id: pluto_detect_files
   name: pluto detect-files
-  description: Search for deprecated Kubernetes API(s) in files
+  description: Detect Kubernetes apiVersions in a directory
   entry: hooks/pluto/pluto_detect_files.sh
   language: script
   require_serial: true
@@ -14,7 +14,7 @@
 
 - id: pluto_detect_helm
   name: pluto detect-helm
-  description: Search for deprecated helm charts in Kubernetes
+  description: Detect Kubernetes apiVersions in a helm release (in cluster)
   entry: hooks/pluto/pluto_detect_helm.sh
   language: script
   require_serial: true
@@ -31,7 +31,7 @@
   args: []
 
 - id: nova_search_updates
-  name: nova find
+  name: nova
   description: A tool to check for updated chart releases
   entry: hooks/nova/nova_search_updates.sh
   language: script
@@ -39,7 +39,7 @@
   args: []
 
 - id: popeye_scan
-  name: popeye scan
+  name: popeye
   description: Scans your Kubernetes clusters and reports potential resource issues
   entry: hooks/popeye/popeye_scan.sh
   language: script
