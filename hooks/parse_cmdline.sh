@@ -10,7 +10,7 @@ declare -a context containers format k8s_version namespace removed score
 
 pluto::detect_files_() {
 
-  while getopts dto files; do
+  while getopts d:to files; do
     case $files in
       d | --directory)
         directory=${OPTARG}
@@ -36,7 +36,7 @@ pluto::detect_files_() {
 
 pluto::detect_helm_() {
 
-  while getopts knto helm; do
+  while getopts k:nto helm; do
     case $helm in
       k | --kube-context)
         context=${OPTARG}
@@ -66,7 +66,7 @@ pluto::detect_helm_() {
 
 pluto::detect_api_() {
 
-  while getopts ort api; do
+  while getopts o:rt api; do
     case $api in
       r | --only-show-removed)
         removed=${OPTARG}
@@ -87,7 +87,7 @@ pluto::detect_api_() {
 
 nova::search_updates_() {
 
-  while getopts kcfanw nova; do
+  while getopts k:cfanw nova; do
     case $nova in
       k | --context)
         context=${OPTARG}
@@ -121,17 +121,17 @@ nova::search_updates_() {
 
 popeye::scan_resources_() {
 
-  while getopts o popeye; do
+  while getopts o:kAs popeye; do
     case $popeye in
-      --all-namespaces)
+      A | --all-namespaces)
         namespace=${OPTARG}
         ARGS+=("$namespace ")
       ;;
-      --context)
+      k | --context)
         context=${OPTARG}
         ARGS+=("$context ")
       ;;
-      --min-score)
+      s | --min-score)
         score=$OPTARG
         ARGS+=("$score ")
       ;;
@@ -139,7 +139,7 @@ popeye::scan_resources_() {
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
-      --)
+      --save)
         ARGS+="$@ "
     esac
   done
