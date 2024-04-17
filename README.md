@@ -1,6 +1,6 @@
-[![Open Source Helpers](https://www.codetriage.com/devsecopsbr/kubernetes/badges/users.svg)](https://www.codetriage.com/devsecopsbr/kubernetes)
+# Welcome to the DevSecOpsOn Pre-Commit Hooks Project
 
-# Welcome to the DevSecOps Pre-Commit Hooks Project
+[![Open Source Helpers](https://www.codetriage.com/devsecopsbr/kubernetes/badges/users.svg)](https://www.codetriage.com/devsecopsbr/kubernetes)
 
 Welcome to our open-source project focused on automating DevSecOps practices through pre-commit hooks. This project is dedicated to streamlining daily tasks related to Kubernetes deployments, cluster sanitization, security scanning, and so on.
 
@@ -15,13 +15,13 @@ Welcome to our open-source project focused on automating DevSecOps practices thr
 
 To start using our pre-commit hooks in your projects, follow these simple steps:
 
-1. **Installation**: Install the pre-commit framework if you haven't already:
+**Installation**: Install the pre-commit framework if you haven't already:
 
 ```shell
 pip install pre-commit
 ```
 
-2. **Configuration**: Add our pre-commit hooks to your project's `.pre-commit-config.yaml` file:
+**Configuration**: Add our pre-commit hooks to your project's `.pre-commit-config.yaml` file:
 
 ```yaml
 default_stages: [pre-commit, pre-push]
@@ -46,7 +46,7 @@ repos:
 
 > Remember to setup your default_stages to have a better control on how trigger the hook
 
-1. **Initialization**: Run `pre-commit install` to set up the hooks in your repository.
+1. **Initialization**: Run `pre-commit install --install-hooks` to set up the hooks in your repository.
    1. Stay up to date run `pre-commit autoupdate` and don't miss improves, features, andfixes updates.
 
 2. **Usage**:
@@ -56,9 +56,15 @@ Commit your changes as usual. Our pre-commit hooks will automatically run before
 ## Our hooks
 
 - pluto detect-files
-  - Search for kubernetes deprecated APIs in files
+  - Detect Kubernetes apiVersions in a directory
 - pluto detect-helm
-  - Search for deprecated helm charts in kubernetes
+  - Detect Kubernetes apiVersions in a helm release (in cluster)
+- pluto detect-api-resources
+  - Detect Kubernetes apiVersions from an active cluster
+- nova
+  - A tool to check for updated chart releases
+- popeye
+  - Scans your Kubernetes clusters and reports potential resource issues
 
 ## Contributions
 

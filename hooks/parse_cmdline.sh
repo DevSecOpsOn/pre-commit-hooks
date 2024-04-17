@@ -66,7 +66,7 @@ pluto::detect_helm_() {
 
 pluto::detect_api_() {
 
-  while getopts rot api; do
+  while getopts o:rt api; do
     case $api in
       r | --only-show-removed)
         removed=${OPTARG}
@@ -87,13 +87,13 @@ pluto::detect_api_() {
 
 nova::search_updates_() {
 
-  while getopts an nova; do
+  while getopts f:canw nova; do
     case $nova in
-      --containers)
+      c | --containers)
         containers=${OPTARG}
         ARGS+=("$containers ")
       ;;
-      --format)
+      f | --format)
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
@@ -105,7 +105,7 @@ nova::search_updates_() {
         namespace=$OPTARG
         ARGS+=("$namespace ")
       ;;
-      --wide)
+      w | --wide)
         shift
         ARGS+=("$OPTARG ")
         shift
@@ -117,7 +117,7 @@ nova::search_updates_() {
 
 popeye::scan_resources_() {
 
-  while getopts k:sa popeye; do
+  while getopts o:kAs popeye; do
     case $popeye in
       A | --all-namespaces)
         namespace=${OPTARG}
