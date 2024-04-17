@@ -31,7 +31,7 @@
   args: []
 
 - id: nova_search_updates
-  name: nova
+  name: nova finding
   description: A tool to check for updated chart releases
   entry: hooks/nova/nova_search_updates.sh
   language: script
@@ -39,7 +39,7 @@
   args: []
 
 - id: popeye_scan
-  name: popeye
+  name: popeye scanning
   description: Scans your Kubernetes clusters and reports potential resource issues
   entry: hooks/popeye/popeye_scan.sh
   language: script

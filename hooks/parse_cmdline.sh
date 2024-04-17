@@ -87,8 +87,12 @@ pluto::detect_api_() {
 
 nova::search_updates_() {
 
-  while getopts f:canw nova; do
+  while getopts k:cfanw nova; do
     case $nova in
+      k | --context)
+        context=${OPTARG}
+        ARGS+=("$context ")
+      ;;
       c | --containers)
         containers=${OPTARG}
         ARGS+=("$containers ")
@@ -135,6 +139,8 @@ popeye::scan_resources_() {
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
+      --save)
+        ARGS+="$@ "
     esac
   done
 
