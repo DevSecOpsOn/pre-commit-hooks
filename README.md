@@ -32,16 +32,18 @@ repos:
     hooks:
       - id: pluto_detect_files
         args: [ -d helm_charts --output markdown ]
-        verbose: true #optional
       - id: pluto_detect_helm
-        args: [ -k <cluster-context> --output markdown ]
-        verbose: true #optional
+        args: [ -k <cluster-context> -o markdown ]
+        verbose: true
       - id: pluto_detect_api
-        args: [ --output markdown --target_version k8s_version=v1.20.0 ]
-        verbose: true #optional
+        args: [ -o markdown ]
+        verbose: true
       - id: nova_search_updates
-        args: [ -k <cluster-context> --format table ]
-        verbose: true #optional
+        args: [ -k <cluster-context> --format table --wide ]
+        verbose: true
+      - id: popeye_scan
+        args: [ -k <cluster-context> ]
+        verbose: true
 ```
 
 > Remember to setup your default_stages to have a better control on how trigger the hook
