@@ -121,26 +121,16 @@ nova::search_updates_() {
 
 popeye::scan_resources_() {
 
-  while getopts o:kAs popeye; do
+  while getopts o: popeye; do
     case $popeye in
-      A | --all-namespaces)
-        namespace=${OPTARG}
-        ARGS+=("$namespace ")
-      ;;
-      k | --context)
+      --context)
         context=${OPTARG}
         ARGS+=("$context ")
-      ;;
-      s | --min-score)
-        score=$OPTARG
-        ARGS+=("$score ")
       ;;
       o | --out)
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
-      --save)
-        ARGS+="$@ "
     esac
   done
 
