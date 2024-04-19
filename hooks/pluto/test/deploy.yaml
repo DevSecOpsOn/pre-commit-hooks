@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jaspion
+
+---
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: whoami-nginx
+  namespace: jaspion
+  labels:
+    app: whoami-nginx
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: whoami-nginx
+  template:
+    metadata:
+      labels:
+        app: whoami-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: containous/whoami:v1.4.0
+        ports:
+        - name: nginx
+          containerPort: 80
+        resources:
+          requests:
+            memory: 50Mi
+            cpu: 100m
+          limits:
+            memory: 150Mi
+            cpu: 300m
