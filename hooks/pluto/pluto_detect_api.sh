@@ -6,8 +6,11 @@ PARAMS="detect-api-resources "
 
 # Import external functions
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
-source "$SCRIPT_DIR/../initialize.sh"
-source "$SCRIPT_DIR/../parse_cmdline.sh"
+readonly INITIALIZE="$(cd "$SCRIPT_DIR/.." && pwd -P)"
+readonly PARSE_CMD="$(cd "$SCRIPT_DIR/.." && pwd -P)"
+
+source "$INITIALIZE/initialize.sh"
+source "$PARSE_CMD/parse_cmdline.sh"
 
 main() {
 
