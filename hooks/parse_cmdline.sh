@@ -6,21 +6,21 @@ set -eo pipefail
 declare -a ARGS=()
 declare -a FILES=()
 
-declare -a context containers format k8s_version namespace removed score
+declare -a context containers format k8s_version namespace removed score wide
 
 pluto::detect_files_() {
 
   while getopts d:to files; do
     case $files in
-      d | --directory)
+      -d | --directory)
         directory=${OPTARG}
         ARGS+=("$directory ")
       ;;
-      t | --target-versions)
+      -t | --target-versions)
         k8s_version=${OPTARG}
         ARGS+=("$k8s_version ")
       ;;
-      o | --output)
+      -o | --output)
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
@@ -38,19 +38,19 @@ pluto::detect_helm_() {
 
   while getopts k:nto helm; do
     case $helm in
-      k | --kube-context)
+      -k | --kube-context)
         context=${OPTARG}
         ARGS+=("$context ")
       ;;
-      n | --namespace)
+      -n | --namespace)
         namespace=$OPTARG
         ARGS+=("$namespace ")
       ;;
-      t | --target-versions)
+      -t | --target-versions)
         k8s_version=${OPTARG}
         ARGS+=("$k8s_version ")
       ;;
-      o | --output)
+      -o | --output)
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
@@ -68,17 +68,22 @@ pluto::detect_api_() {
 
   while getopts o:rt api; do
     case $api in
-      r | --only-show-removed)
-        removed=${OPTARG}
-        ARGS+=($"$removed ")
-      ;;
-      o | --output)
+      -o | --output)
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
-      t | --target-versions)
+      -r | --only-show-removed)
+        removed=${OPTARG}
+        ARGS+=($"$removed ")
+      ;;
+      -t | --target-versions)
         k8s_version=${OPTARG}
         ARGS+=("$k8s_version ")
+      ;;
+      --)
+        shift
+        FILES=("$@")
+        break
       ;;
     esac
   done
@@ -89,30 +94,35 @@ nova::search_updates_() {
 
   while getopts k:cfanw nova; do
     case $nova in
-      k | --context)
+      -k | --context)
         context=${OPTARG}
         ARGS+=("$context ")
       ;;
-      c | --containers)
+      -c | --containers)
         containers=${OPTARG}
         ARGS+=("$containers ")
       ;;
-      f | --format)
+      -f | --format)
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
-      a | --include-all)
+      -a | --include-all)
         namespace=${OPTARG}
         ARGS+=("$namespace ")
       ;;
-      n | --namespace)
+      -n | --namespace)
         namespace=$OPTARG
         ARGS+=("$namespace ")
       ;;
-      w | --wide)
+      -w | --wide)
         shift
         ARGS+=("$OPTARG ")
         shift
+      ;;
+      --)
+        shift
+        FILES=("$@")
+        break
       ;;
     esac
   done
@@ -121,26 +131,29 @@ nova::search_updates_() {
 
 popeye::scan_resources_() {
 
-  while getopts o:kAs popeye; do
+  while getopts k:oAs popeye; do
     case $popeye in
-      A | --all-namespaces)
-        namespace=${OPTARG}
-        ARGS+=("$namespace ")
-      ;;
-      k | --context)
+      -k | --context)
         context=${OPTARG}
         ARGS+=("$context ")
       ;;
-      s | --min-score)
+      -A | --all-namespaces)
+        namespace=${OPTARG}
+        ARGS+=("$namespace ")
+      ;;
+      -s | --min-score)
         score=$OPTARG
         ARGS+=("$score ")
       ;;
-      o | --out)
+      -o | --out)
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
-      --save)
-        ARGS+="$@ "
+      --)
+        shift
+        FILES=("$@")
+        break
+      ;;
     esac
   done
 
