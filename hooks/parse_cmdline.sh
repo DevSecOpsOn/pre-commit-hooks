@@ -12,15 +12,15 @@ pluto::detect_files_() {
 
   while getopts d:to files; do
     case $files in
-      d) | --directory)
+      -d | --directory)
         directory=${OPTARG}
         ARGS+=("$directory ")
       ;;
-      t) | --target-versions)
+      -t | --target-versions)
         k8s_version=${OPTARG}
         ARGS+=("$k8s_version ")
       ;;
-      o) | --output)
+      -o | --output)
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
@@ -38,19 +38,19 @@ pluto::detect_helm_() {
 
   while getopts k:nto helm; do
     case $helm in
-      k) | --kube-context)
+      -k | --kube-context)
         context=${OPTARG}
         ARGS+=("$context ")
       ;;
-      n) | --namespace)
+      -n | --namespace)
         namespace=$OPTARG
         ARGS+=("$namespace ")
       ;;
-      t) | --target-versions)
+      -t | --target-versions)
         k8s_version=${OPTARG}
         ARGS+=("$k8s_version ")
       ;;
-      o) | --output)
+      -o | --output)
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
@@ -68,15 +68,15 @@ pluto::detect_api_() {
 
   while getopts o:rt api; do
     case $api in
-      o) | --output)
+      -o | --output)
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
-      r) | --only-show-removed)
+      -r | --only-show-removed)
         removed=${OPTARG}
         ARGS+=($"$removed ")
       ;;
-      t) | --target-versions)
+      -t | --target-versions)
         k8s_version=${OPTARG}
         ARGS+=("$k8s_version ")
       ;;
@@ -133,19 +133,19 @@ popeye::scan_resources_() {
 
   while getopts k:oAs popeye; do
     case $popeye in
-      k) | --context)
+      -k | --context)
         context=${OPTARG}
         ARGS+=("$context ")
       ;;
-      A) | --all-namespaces)
+      -A | --all-namespaces)
         namespace=${OPTARG}
         ARGS+=("$namespace ")
       ;;
-      s) | --min-score)
+      -s | --min-score)
         score=$OPTARG
         ARGS+=("$score ")
       ;;
-      o) | --out)
+      -o | --out)
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
