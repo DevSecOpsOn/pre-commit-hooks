@@ -94,27 +94,27 @@ nova::search_updates_() {
 
   while getopts k:cfanw nova; do
     case $nova in
-      k) | --context)
+      -k) --context)
         context=${OPTARG}
         ARGS+=("$context ")
       ;;
-      c) | --containers)
+      -c) --containers)
         containers=${OPTARG}
         ARGS+=("$containers ")
       ;;
-      f) | --format)
+      -f) --format)
         format=${OPTARG}
         ARGS+=("$format ")
       ;;
-      a) | --include-all)
+      -a) --include-all)
         namespace=${OPTARG}
         ARGS+=("$namespace ")
       ;;
-      n) | --namespace)
+      -n) --namespace)
         namespace=$OPTARG
         ARGS+=("$namespace ")
       ;;
-      w) | --wide)
+      -w) --wide)
         shift
         ARGS+=("$OPTARG ")
         shift
