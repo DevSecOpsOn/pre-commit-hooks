@@ -22,20 +22,32 @@ main() {
 
 pluto_detect_files_() {
 
-  for file_with_path in $FILES; do
+  local -a paths=()
+  local index=0
+  local path_uniq="."
+
+  # Extract directory paths from files
+  for file_with_path in "${FILES[@]}"; do
     file_with_path="${file_with_path// /__REPLACED__SPACE__}"
     paths[index]=$(dirname "$file_with_path")
-    let "index+=1"
+    ((index++))
   done
 
-  for i in "${ARGS[@]}"
-  do
+  # Get unique path (assuming all files are in same directory or use first)
+  if [[ ${#paths[@]} -gt 0 ]]; then
+    path_uniq="${paths[0]}"
+  fi
+
+  # Build parameters from ARGS array
+  for i in "${ARGS[@]}"; do
     PARAMS="${PARAMS} ${i}"
-    pushd "$path_uniq" > /dev/null
-    echo $PARAMS
-    pluto $PARAMS
-    popd > /dev/null
   done
+
+  # Execute pluto command
+  pushd "$path_uniq" > /dev/null
+  echo "$PARAMS"
+  pluto $PARAMS
+  popd > /dev/null
 
 }
 

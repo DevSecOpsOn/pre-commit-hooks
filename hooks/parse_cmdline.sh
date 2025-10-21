@@ -10,19 +10,19 @@ declare -a context containers format k8s_version namespace removed score wide
 
 pluto::detect_files_() {
 
-  while getopts d:to files; do
+  while getopts d:t:o: files; do
     case $files in
-      d) | --directory)
+      d) # --directory
         directory=${OPTARG}
-        ARGS+=("$directory ")
+        ARGS+=("--directory" "$directory")
       ;;
-      t) | --target-versions)
+      t) # --target-versions
         k8s_version=${OPTARG}
-        ARGS+=("$k8s_version ")
+        ARGS+=("--target-versions" "$k8s_version")
       ;;
-      o) | --output)
+      o) # --output
         format=${OPTARG}
-        ARGS+=("$format ")
+        ARGS+=("--output" "$format")
       ;;
       --)
         shift
@@ -36,23 +36,23 @@ pluto::detect_files_() {
 
 pluto::detect_helm_() {
 
-  while getopts k:nto helm; do
+  while getopts k:n:t:o: helm; do
     case $helm in
-      k) | --kube-context)
+      k) # --kube-context
         context=${OPTARG}
-        ARGS+=("$context ")
+        ARGS+=("--kube-context" "$context")
       ;;
-      n) | --namespace)
+      n) # --namespace
         namespace=$OPTARG
-        ARGS+=("$namespace ")
+        ARGS+=("--namespace" "$namespace")
       ;;
-      t) | --target-versions)
+      t) # --target-versions
         k8s_version=${OPTARG}
-        ARGS+=("$k8s_version ")
+        ARGS+=("--target-versions" "$k8s_version")
       ;;
-      o) | --output)
+      o) # --output
         format=${OPTARG}
-        ARGS+=("$format ")
+        ARGS+=("--output" "$format")
       ;;
       --)
         shift
@@ -66,19 +66,18 @@ pluto::detect_helm_() {
 
 pluto::detect_api_() {
 
-  while getopts o:rt api; do
+  while getopts o:rt: api; do
     case $api in
-      o) | --output)
+      o) # --output
         format=${OPTARG}
-        ARGS+=("$format ")
+        ARGS+=("--output" "$format")
       ;;
-      r) | --only-show-removed)
-        removed=${OPTARG}
-        ARGS+=($"$removed ")
+      r) # --only-show-removed
+        ARGS+=("--only-show-removed")
       ;;
-      t) | --target-versions)
+      t) # --target-versions
         k8s_version=${OPTARG}
-        ARGS+=("$k8s_version ")
+        ARGS+=("--target-versions" "$k8s_version")
       ;;
       --)
         shift
@@ -92,32 +91,29 @@ pluto::detect_api_() {
 
 nova::search_updates_() {
 
-  while getopts k:cfanw nova; do
+  while getopts k:c:f:an:w nova; do
     case $nova in
-      k) | --context)
+      k) # --context
         context=${OPTARG}
-        ARGS+=("$context ")
+        ARGS+=("--context" "$context")
       ;;
-      c) | --containers)
+      c) # --containers
         containers=${OPTARG}
-        ARGS+=("$containers ")
+        ARGS+=("--containers" "$containers")
       ;;
-      f) | --format)
+      f) # --format
         format=${OPTARG}
-        ARGS+=("$format ")
+        ARGS+=("--format" "$format")
       ;;
-      a) | --include-all)
-        namespace=${OPTARG}
-        ARGS+=("$namespace ")
+      a) # --include-all
+        ARGS+=("--include-all")
       ;;
-      n) | --namespace)
+      n) # --namespace
         namespace=$OPTARG
-        ARGS+=("$namespace ")
+        ARGS+=("--namespace" "$namespace")
       ;;
-      w) | --wide)
-        shift
-        ARGS+=("$OPTARG ")
-        shift
+      w) # --wide
+        ARGS+=("--wide")
       ;;
       --)
         shift
@@ -131,23 +127,22 @@ nova::search_updates_() {
 
 popeye::scan_resources_() {
 
-  while getopts k:oAs popeye; do
+  while getopts k:o:As: popeye; do
     case $popeye in
-      k) | --context)
+      k) # --context
         context=${OPTARG}
-        ARGS+=("$context ")
+        ARGS+=("--context" "$context")
       ;;
-      A) | --all-namespaces)
-        namespace=${OPTARG}
-        ARGS+=("$namespace ")
+      A) # --all-namespaces
+        ARGS+=("--all-namespaces")
       ;;
-      s) | --min-score)
+      s) # --min-score
         score=$OPTARG
-        ARGS+=("$score ")
+        ARGS+=("--min-score" "$score")
       ;;
-      o) | --out)
+      o) # --out
         format=${OPTARG}
-        ARGS+=("$format ")
+        ARGS+=("--out" "$format")
       ;;
       --)
         shift
