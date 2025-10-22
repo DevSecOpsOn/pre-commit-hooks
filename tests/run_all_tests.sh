@@ -75,6 +75,26 @@ if [ -f "$SCRIPT_DIR/test_popeye_scan.sh" ]; then
     run_test "$SCRIPT_DIR/test_popeye_scan.sh"
 fi
 
+# Kube-score tests
+if [ -f "$SCRIPT_DIR/test_kubescore.sh" ]; then
+    run_test "$SCRIPT_DIR/test_kubescore.sh"
+fi
+
+# Snyk tests
+if [ -f "$SCRIPT_DIR/test_snyk.sh" ]; then
+    run_test "$SCRIPT_DIR/test_snyk.sh"
+fi
+
+# Trivy tests
+if [ -f "$SCRIPT_DIR/test_trivy.sh" ]; then
+    run_test "$SCRIPT_DIR/test_trivy.sh"
+fi
+
+# Checkov tests
+if [ -f "$SCRIPT_DIR/test_checkov.sh" ]; then
+    run_test "$SCRIPT_DIR/test_checkov.sh"
+fi
+
 # Print summary
 echo -e "${BLUE}╔════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${BLUE}║     Test Summary                                           ║${NC}"

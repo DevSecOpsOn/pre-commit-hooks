@@ -1,0 +1,160 @@
+# Example Pre-Commit Configuration for DevSecOps Hooks
+# Copy this file to .pre-commit-config.yaml and customize as needed
+
+repos:
+  - repo: https://github.com/DevSecOpsOn/pre-commit-hooks
+    rev: v1.0.0  # Use the latest release tag
+    hooks:
+      # ============================================
+      # KUBERNETES BEST PRACTICES
+      # ============================================
+      
+      # Score Kubernetes manifests for best practices
+      - id: kubescore_score
+        name: Kube-score Analysis
+        args: ['-v']  # verbose output
+        files: (deployment|service|ingress|statefulset)\.yaml$
+      
+      # ============================================
+      # DEPRECATED API DETECTION
+      # ============================================
+      
+      # Detect deprecated Kubernetes APIs in files
+      - id: pluto_detect_files
+        name: Pluto - Detect Deprecated APIs
+        args: ['-d', '.', '-o', 'wide']
+        files: \.yaml$
+      
+      # Detect deprecated APIs in Helm releases (requires cluster)
+      # - id: pluto_detect_helm
+      #   name: Pluto - Scan Helm Releases
+      #   args: ['-k', 'my-context', '-n', 'default']
+      
+      # Detect deprecated APIs in cluster (requires cluster)
+      # - id: pluto_detect_api
+      #   name: Pluto - Scan Cluster APIs
+      #   args: ['-r', '-o', 'json']
+      
+      # ============================================
+      # SECURITY SCANNING
+      # ============================================
+      
+      # Snyk IaC scanning (requires authentication)
+      - id: snyk_iac
+        name: Snyk IaC Security Scan
+        args: ['-s', 'high']  # fail on high severity and above
+        files: (\.yaml|\.tf|\.json)$
+      
+      # Trivy filesystem scanning
+      - id: trivy_fs
+        name: Trivy Filesystem Scan
+        args: ['-s', 'CRITICAL,HIGH', '-f', 'table']
+      
+      # Checkov IaC security and compliance
+      - id: checkov_scan
+        name: Checkov Security Scan
+        args: ['-f', 'kubernetes', '-c']  # compact output
+        files: \.yaml$
+      
+      # ============================================
+      # CONTAINER SCANNING (uncomment if needed)
+      # ============================================
+      
+      # Snyk container scanning
+      # - id: snyk_container
+      #   name: Snyk Container Scan
+      #   args: ['-s', 'critical']
+      
+      # Trivy image scanning
+      # - id: trivy_image
+      #   name: Trivy Image Scan
+      #   args: ['-s', 'CRITICAL', '-e', '1']
+      
+      # ============================================
+      # CLUSTER HEALTH (requires cluster)
+      # ============================================
+      
+      # Find outdated Helm charts
+      # - id: nova_search_updates
+      #   name: Nova - Find Outdated Charts
+      #   args: ['-k', 'my-context', '-w']
+      
+      # Scan cluster for issues
+      # - id: popeye_scan
+      #   name: Popeye Cluster Scan
+      #   args: ['-k', 'my-context', '-s', '80']
+
+# ============================================
+# CONFIGURATION PROFILES
+# ============================================
+
+# MINIMAL PROFILE (fast, essential checks only)
+# Uncomment this section and comment out the above for minimal checks
+# repos:
+#   - repo: https://github.com/DevSecOpsOn/pre-commit-hooks
+#     rev: v1.0.0
+#     hooks:
+#       - id: kubescore_score
+#       - id: trivy_fs
+#         args: ['-s', 'CRITICAL']
+
+# COMPREHENSIVE PROFILE (all security checks)
+# Uncomment this section for maximum security coverage
+# repos:
+#   - repo: https://github.com/DevSecOpsOn/pre-commit-hooks
+#     rev: v1.0.0
+#     hooks:
+#       - id: kubescore_score
+#         args: ['-v', '-o', 'json']
+#       - id: pluto_detect_files
+#         args: ['-d', '.', '-o', 'wide']
+#       - id: snyk_iac
+#         args: ['-s', 'medium', '-j']
+#       - id: trivy_fs
+#         args: ['-s', 'MEDIUM,HIGH,CRITICAL', '-f', 'json']
+#       - id: checkov_scan
+#         args: ['-f', 'kubernetes', '-c', '-q']
+
+# CI/CD PROFILE (optimized for pipelines)
+# Uncomment this section for CI/CD environments
+# repos:
+#   - repo: https://github.com/DevSecOpsOn/pre-commit-hooks
+#     rev: v1.0.0
+#     hooks:
+#       - id: kubescore_score
+#         args: ['-o', 'json']
+#       - id: pluto_detect_files
+#         args: ['-o', 'json']
+#       - id: trivy_fs
+#         args: ['-s', 'CRITICAL', '-e', '1', '-f', 'json']
+#       - id: checkov_scan
+#         args: ['-f', 'kubernetes', '-c', '-q', '-s']  # soft-fail
+
+# ============================================
+# USAGE INSTRUCTIONS
+# ============================================
+#
+# 1. Install pre-commit:
+#    pip install pre-commit
+#
+# 2. Install required tools (see DEVSECOPS_HOOKS.md)
+#
+# 3. Install hooks:
+#    pre-commit install
+#
+# 4. Run manually:
+#    pre-commit run --all-files
+#
+# 5. Run on specific files:
+#    pre-commit run --files path/to/file.yaml
+#
+# 6. Skip hooks temporarily:
+#    SKIP=snyk_iac git commit -m "message"
+#
+# 7. Update hooks:
+#    pre-commit autoupdate
+#
+# For more information, see:
+# - DEVSECOPS_HOOKS.md (comprehensive guide)
+# - README_TOOLS.md (quick reference)
+# - PROJECT_SUMMARY.md (architecture overview)

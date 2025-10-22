@@ -45,3 +45,62 @@
   language: script
   require_serial: true
   args: []
+
+- id: kubescore_score
+  name: kube-score
+  description: Static code analysis for Kubernetes object definitions
+  entry: hooks/kubescore/kubescore_score.sh
+  language: script
+  require_serial: true
+  files: (\.yml|\.yaml)$
+  args: []
+
+- id: snyk_test
+  name: snyk test
+  description: Test dependencies for vulnerabilities with Snyk
+  entry: hooks/snyk/snyk_test.sh
+  language: script
+  require_serial: true
+  args: []
+
+- id: snyk_container
+  name: snyk container test
+  description: Scan container images for vulnerabilities with Snyk
+  entry: hooks/snyk/snyk_container.sh
+  language: script
+  require_serial: true
+  args: []
+
+- id: snyk_iac
+  name: snyk iac test
+  description: Scan Infrastructure as Code files for security issues with Snyk
+  entry: hooks/snyk/snyk_iac.sh
+  language: script
+  require_serial: true
+  files: (\.yml|\.yaml|\.tf|\.json)$
+  args: []
+
+- id: trivy_fs
+  name: trivy filesystem scan
+  description: Scan filesystem for vulnerabilities with Trivy
+  entry: hooks/trivy/trivy_fs.sh
+  language: script
+  require_serial: true
+  args: []
+
+- id: trivy_image
+  name: trivy image scan
+  description: Scan container images for vulnerabilities with Trivy
+  entry: hooks/trivy/trivy_image.sh
+  language: script
+  require_serial: true
+  args: []
+
+- id: checkov_scan
+  name: checkov scan
+  description: Scan Infrastructure as Code for security and compliance issues
+  entry: hooks/checkov/checkov_scan.sh
+  language: script
+  require_serial: true
+  files: (\.yml|\.yaml|\.tf|\.json|Dockerfile)$
+  args: []
