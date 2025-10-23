@@ -1,0 +1,16 @@
+# Bad Dockerfile with issues
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install -y curl
+
+WORKDIR /app
+
+COPY . .
+
+# Running as root (security issue)
+# No version pinning (reproducibility issue)
+# Using latest tag (not recommended)
+
+EXPOSE 80
+
+CMD nginx -g "daemon off;"

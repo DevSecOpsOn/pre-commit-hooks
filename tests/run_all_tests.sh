@@ -95,6 +95,36 @@ if [ -f "$SCRIPT_DIR/test_checkov.sh" ]; then
     run_test "$SCRIPT_DIR/test_checkov.sh"
 fi
 
+# Gitleaks tests
+if [ -f "$SCRIPT_DIR/test_gitleaks.sh" ]; then
+    run_test "$SCRIPT_DIR/test_gitleaks.sh"
+fi
+
+# Hadolint tests
+if [ -f "$SCRIPT_DIR/test_hadolint.sh" ]; then
+    run_test "$SCRIPT_DIR/test_hadolint.sh"
+fi
+
+# ShellCheck tests
+if [ -f "$SCRIPT_DIR/test_shellcheck.sh" ]; then
+    run_test "$SCRIPT_DIR/test_shellcheck.sh"
+fi
+
+# yamllint tests
+if [ -f "$SCRIPT_DIR/test_yamllint.sh" ]; then
+    run_test "$SCRIPT_DIR/test_yamllint.sh"
+fi
+
+# tfsec tests
+if [ -f "$SCRIPT_DIR/test_tfsec.sh" ]; then
+    run_test "$SCRIPT_DIR/test_tfsec.sh"
+fi
+
+# Infracost tests
+if [ -f "$SCRIPT_DIR/test_infracost.sh" ]; then
+    run_test "$SCRIPT_DIR/test_infracost.sh"
+fi
+
 # Print summary
 echo -e "${BLUE}╔════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${BLUE}║     Test Summary                                           ║${NC}"

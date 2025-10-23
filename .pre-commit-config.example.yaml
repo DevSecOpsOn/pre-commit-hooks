@@ -36,6 +36,44 @@ repos:
       #   args: ['-r', '-o', 'json']
       
       # ============================================
+      # ESSENTIAL SECURITY TOOLS
+      # ============================================
+      
+      # Secret scanning (CRITICAL - prevents credential leaks)
+      - id: gitleaks_detect
+        name: Gitleaks - Secret Detection
+        args: ['-v']  # verbose output
+      
+      # Shell script validation
+      - id: shellcheck_check
+        name: ShellCheck - Shell Script Analysis
+        args: ['-s', 'warning']  # minimum severity: warning
+        files: \.sh$
+      
+      # YAML validation
+      - id: yamllint_lint
+        name: yamllint - YAML Linter
+        args: ['-s']  # strict mode
+        files: (\.yml|\.yaml)$
+      
+      # Dockerfile linting
+      - id: hadolint_lint
+        name: Hadolint - Dockerfile Linter
+        files: (Dockerfile|\.dockerfile)$
+      
+      # Terraform security
+      - id: tfsec_scan
+        name: tfsec - Terraform Security
+        args: ['-s', 'HIGH']  # minimum severity: HIGH
+        files: \.tf$
+      
+      # Infrastructure cost estimation
+      - id: infracost_breakdown
+        name: Infracost - Cost Breakdown
+        args: ['-p', 'terraform/', '-f', 'table']
+        files: ^terraform/.*\.tf$
+      
+      # ============================================
       # SECURITY SCANNING
       # ============================================
       

@@ -333,3 +333,207 @@ checkov::scan_() {
   done
 
 }
+
+gitleaks::detect_() {
+
+  while getopts c:vfr gitleaks; do
+    case $gitleaks in
+      c) # --config
+        local config=${OPTARG}
+        ARGS+=("--config" "$config")
+      ;;
+      v) # --verbose
+        ARGS+=("--verbose")
+      ;;
+      f) # --format
+        local format=${OPTARG}
+        ARGS+=("--format" "$format")
+      ;;
+      r) # --report-path
+        local report=${OPTARG}
+        ARGS+=("--report-path" "$report")
+      ;;
+      --)
+        shift
+        FILES=("$@")
+        break
+      ;;
+    esac
+  done
+
+}
+
+hadolint::lint_() {
+
+  while getopts c:f:t hadolint; do
+    case $hadolint in
+      c) # --config
+        local config=${OPTARG}
+        ARGS+=("--config" "$config")
+      ;;
+      f) # --format
+        local format=${OPTARG}
+        ARGS+=("--format" "$format")
+      ;;
+      t) # --trusted-registry
+        local registry=${OPTARG}
+        ARGS+=("--trusted-registry" "$registry")
+      ;;
+      --)
+        shift
+        FILES=("$@")
+        break
+      ;;
+    esac
+  done
+
+}
+
+shellcheck::check_() {
+
+  while getopts s:f:ex shellcheck_opts; do
+    case $shellcheck_opts in
+      s) # --severity
+        local severity=${OPTARG}
+        ARGS+=("--severity=$severity")
+      ;;
+      f) # --format
+        local format=${OPTARG}
+        ARGS+=("--format=$format")
+      ;;
+      e) # --external-sources
+        ARGS+=("--external-sources")
+      ;;
+      x) # --exclude
+        local exclude=${OPTARG}
+        ARGS+=("--exclude=$exclude")
+      ;;
+      --)
+        shift
+        FILES=("$@")
+        break
+      ;;
+    esac
+  done
+
+}
+
+yamllint::lint_() {
+
+  while getopts c:f:sd yamllint_opts; do
+    case $yamllint_opts in
+      c) # --config-file
+        local config=${OPTARG}
+        ARGS+=("--config-file" "$config")
+      ;;
+      f) # --format
+        local format=${OPTARG}
+        ARGS+=("--format" "$format")
+      ;;
+      s) # --strict
+        ARGS+=("--strict")
+      ;;
+      d) # --config-data
+        local config_data=${OPTARG}
+        ARGS+=("--config-data" "$config_data")
+      ;;
+      --)
+        shift
+        FILES=("$@")
+        break
+      ;;
+    esac
+  done
+
+}
+
+tfsec::scan_() {
+
+  while getopts f:s:em tfsec_opts; do
+    case $tfsec_opts in
+      f) # --format
+        local format=${OPTARG}
+        ARGS+=("--format" "$format")
+      ;;
+      s) # --minimum-severity
+        local severity=${OPTARG}
+        ARGS+=("--minimum-severity" "$severity")
+      ;;
+      e) # --exclude
+        local exclude=${OPTARG}
+        ARGS+=("--exclude" "$exclude")
+      ;;
+      m) # --soft-fail
+        ARGS+=("--soft-fail")
+      ;;
+      --)
+        shift
+        FILES=("$@")
+        break
+      ;;
+    esac
+  done
+
+}
+
+infracost::breakdown_() {
+
+  while getopts p:f:cst infracost_opts; do
+    case $infracost_opts in
+      p) # --path
+        local path=${OPTARG}
+        ARGS+=("--path" "$path")
+      ;;
+      f) # --format
+        local format=${OPTARG}
+        ARGS+=("--format" "$format")
+      ;;
+      c) # --compare-to
+        local compare=${OPTARG}
+        ARGS+=("--compare-to" "$compare")
+      ;;
+      s) # --show-skipped
+        ARGS+=("--show-skipped")
+      ;;
+      t) # --terraform-var-file
+        local tfvars=${OPTARG}
+        ARGS+=("--terraform-var-file" "$tfvars")
+      ;;
+      --)
+        shift
+        FILES=("$@")
+        break
+      ;;
+    esac
+  done
+
+}
+
+infracost::diff_() {
+
+  while getopts p:f:cs infracost_diff; do
+    case $infracost_diff in
+      p) # --path
+        local path=${OPTARG}
+        ARGS+=("--path" "$path")
+      ;;
+      f) # --format
+        local format=${OPTARG}
+        ARGS+=("--format" "$format")
+      ;;
+      c) # --compare-to
+        local compare=${OPTARG}
+        ARGS+=("--compare-to" "$compare")
+      ;;
+      s) # --show-skipped
+        ARGS+=("--show-skipped")
+      ;;
+      --)
+        shift
+        FILES=("$@")
+        break
+      ;;
+    esac
+  done
+
+}

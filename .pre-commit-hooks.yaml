@@ -104,3 +104,65 @@
   require_serial: true
   files: (\.yml|\.yaml|\.tf|\.json|Dockerfile)$
   args: []
+
+- id: gitleaks_detect
+  name: gitleaks detect
+  description: Detect hardcoded secrets and credentials
+  entry: hooks/gitleaks/gitleaks_detect.sh
+  language: script
+  require_serial: true
+  args: []
+
+- id: hadolint_lint
+  name: hadolint lint
+  description: Lint Dockerfiles for best practices and security
+  entry: hooks/hadolint/hadolint_lint.sh
+  language: script
+  require_serial: true
+  files: (Dockerfile|\.dockerfile)$
+  args: []
+
+- id: shellcheck_check
+  name: shellcheck
+  description: Static analysis for shell scripts
+  entry: hooks/shellcheck/shellcheck_check.sh
+  language: script
+  require_serial: true
+  files: \.sh$
+  args: []
+
+- id: yamllint_lint
+  name: yamllint
+  description: Lint YAML files for syntax and style
+  entry: hooks/yamllint/yamllint_lint.sh
+  language: script
+  require_serial: true
+  files: (\.yml|\.yaml)$
+  args: []
+
+- id: tfsec_scan
+  name: tfsec scan
+  description: Security scanner for Terraform code
+  entry: hooks/tfsec/tfsec_scan.sh
+  language: script
+  require_serial: true
+  files: \.tf$
+  args: []
+
+- id: infracost_breakdown
+  name: infracost breakdown
+  description: Show cost breakdown for infrastructure changes
+  entry: hooks/infracost/infracost_breakdown.sh
+  language: script
+  require_serial: true
+  files: \.tf$
+  args: []
+
+- id: infracost_diff
+  name: infracost diff
+  description: Show cost diff for infrastructure changes
+  entry: hooks/infracost/infracost_diff.sh
+  language: script
+  require_serial: true
+  files: \.tf$
+  args: []
