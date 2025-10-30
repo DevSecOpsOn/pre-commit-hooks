@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-PARAMS="detect-files "
+PARAMS="image "
 
 # Import external functions
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
@@ -15,12 +15,12 @@ source "$PARSE_CMD/parse_cmdline.sh"
 main() {
 
   initialize_
-  pluto::detect_files_ "$@"
-  pluto_detect_files_ "$ARGS" "$FILES"
+  trivy::image_ "$@"
+  trivy_image_ "$ARGS" "$FILES"
 
 }
 
-pluto_detect_files_() {
+trivy_image_() {
 
   local -a paths=()
   local index=0
@@ -43,10 +43,15 @@ pluto_detect_files_() {
     PARAMS="${PARAMS} ${i}"
   done
 
-  # Execute pluto command
+  # Add container images from FILES
+  for image in "${FILES[@]}"; do
+    PARAMS="${PARAMS} ${image}"
+  done
+
+  # Execute trivy image command
   pushd "$path_uniq" > /dev/null
   echo "$PARAMS"
-  pluto $PARAMS
+  trivy $PARAMS
   popd > /dev/null
 
 }

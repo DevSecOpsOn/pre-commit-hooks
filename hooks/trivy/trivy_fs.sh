@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-PARAMS="detect-files "
+PARAMS="fs "
 
 # Import external functions
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
@@ -15,12 +15,12 @@ source "$PARSE_CMD/parse_cmdline.sh"
 main() {
 
   initialize_
-  pluto::detect_files_ "$@"
-  pluto_detect_files_ "$ARGS" "$FILES"
+  trivy::fs_ "$@"
+  trivy_fs_ "$ARGS" "$FILES"
 
 }
 
-pluto_detect_files_() {
+trivy_fs_() {
 
   local -a paths=()
   local index=0
@@ -43,10 +43,17 @@ pluto_detect_files_() {
     PARAMS="${PARAMS} ${i}"
   done
 
-  # Execute pluto command
+  # Add target path
+  if [[ ${#FILES[@]} -gt 0 ]]; then
+    PARAMS="${PARAMS} ${FILES[0]}"
+  else
+    PARAMS="${PARAMS} ."
+  fi
+
+  # Execute trivy fs command
   pushd "$path_uniq" > /dev/null
   echo "$PARAMS"
-  pluto $PARAMS
+  trivy $PARAMS
   popd > /dev/null
 
 }

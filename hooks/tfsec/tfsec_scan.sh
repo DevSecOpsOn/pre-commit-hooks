@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-PARAMS="detect-files "
+PARAMS=""
 
 # Import external functions
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
@@ -15,12 +15,12 @@ source "$PARSE_CMD/parse_cmdline.sh"
 main() {
 
   initialize_
-  pluto::detect_files_ "$@"
-  pluto_detect_files_ "$ARGS" "$FILES"
+  tfsec::scan_ "$@"
+  tfsec_scan_ "$ARGS" "$FILES"
 
 }
 
-pluto_detect_files_() {
+tfsec_scan_() {
 
   local -a paths=()
   local index=0
@@ -43,10 +43,18 @@ pluto_detect_files_() {
     PARAMS="${PARAMS} ${i}"
   done
 
-  # Execute pluto command
+  # tfsec scans directories, not individual files
+  # Add the directory path
+  if [[ ${#FILES[@]} -gt 0 ]]; then
+    PARAMS="${PARAMS} ${path_uniq}"
+  else
+    PARAMS="${PARAMS} ."
+  fi
+
+  # Execute tfsec command
   pushd "$path_uniq" > /dev/null
   echo "$PARAMS"
-  pluto $PARAMS
+  tfsec $PARAMS
   popd > /dev/null
 
 }

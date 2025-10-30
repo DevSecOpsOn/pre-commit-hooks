@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-PARAMS="detect-files "
+PARAMS="detect "
 
 # Import external functions
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
@@ -15,12 +15,12 @@ source "$PARSE_CMD/parse_cmdline.sh"
 main() {
 
   initialize_
-  pluto::detect_files_ "$@"
-  pluto_detect_files_ "$ARGS" "$FILES"
+  gitleaks::detect_ "$@"
+  gitleaks_detect_ "$ARGS" "$FILES"
 
 }
 
-pluto_detect_files_() {
+gitleaks_detect_() {
 
   local -a paths=()
   local index=0
@@ -43,10 +43,18 @@ pluto_detect_files_() {
     PARAMS="${PARAMS} ${i}"
   done
 
-  # Execute pluto command
+  # Add source path - gitleaks scans the entire directory by default
+  # If specific files provided, scan from their directory
+  if [[ ${#FILES[@]} -gt 0 ]]; then
+    PARAMS="${PARAMS} --source=${path_uniq}"
+  else
+    PARAMS="${PARAMS} --source=."
+  fi
+
+  # Execute gitleaks command
   pushd "$path_uniq" > /dev/null
   echo "$PARAMS"
-  pluto $PARAMS
+  gitleaks $PARAMS
   popd > /dev/null
 
 }

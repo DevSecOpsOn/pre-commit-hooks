@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-PARAMS="detect-files "
+PARAMS="breakdown "
 
 # Import external functions
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
@@ -15,12 +15,12 @@ source "$PARSE_CMD/parse_cmdline.sh"
 main() {
 
   initialize_
-  pluto::detect_files_ "$@"
-  pluto_detect_files_ "$ARGS" "$FILES"
+  infracost::breakdown_ "$@"
+  infracost_breakdown_ "$ARGS" "$FILES"
 
 }
 
-pluto_detect_files_() {
+infracost_breakdown_() {
 
   local -a paths=()
   local index=0
@@ -43,10 +43,19 @@ pluto_detect_files_() {
     PARAMS="${PARAMS} ${i}"
   done
 
-  # Execute pluto command
+  # If no --path specified, use current directory or detected path
+  if [[ ! "$PARAMS" =~ "--path" ]]; then
+    if [[ ${#FILES[@]} -gt 0 ]]; then
+      PARAMS="${PARAMS} --path ${path_uniq}"
+    else
+      PARAMS="${PARAMS} --path ."
+    fi
+  fi
+
+  # Execute infracost breakdown command
   pushd "$path_uniq" > /dev/null
   echo "$PARAMS"
-  pluto $PARAMS
+  infracost $PARAMS
   popd > /dev/null
 
 }

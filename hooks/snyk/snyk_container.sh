@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-PARAMS="detect-files "
+PARAMS="container test "
 
 # Import external functions
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
@@ -15,12 +15,12 @@ source "$PARSE_CMD/parse_cmdline.sh"
 main() {
 
   initialize_
-  pluto::detect_files_ "$@"
-  pluto_detect_files_ "$ARGS" "$FILES"
+  snyk::container_ "$@"
+  snyk_container_ "$ARGS" "$FILES"
 
 }
 
-pluto_detect_files_() {
+snyk_container_() {
 
   local -a paths=()
   local index=0
@@ -43,10 +43,15 @@ pluto_detect_files_() {
     PARAMS="${PARAMS} ${i}"
   done
 
-  # Execute pluto command
+  # Add container images from FILES
+  for image in "${FILES[@]}"; do
+    PARAMS="${PARAMS} ${image}"
+  done
+
+  # Execute snyk container test command
   pushd "$path_uniq" > /dev/null
   echo "$PARAMS"
-  pluto $PARAMS
+  snyk $PARAMS
   popd > /dev/null
 
 }
