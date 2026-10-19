@@ -1,0 +1,75 @@
+---
+# Docker-based pre-commit hooks configuration
+# This configuration uses Docker containers to run tools without local installation
+
+# For use with pre-commit.
+# See usage instructions at http://pre-commit.com
+
+- id: gitleaks-docker
+  name: gitleaks-docker
+  description: Detect hardcoded secrets and credentials (Docker)
+  entry: docker-hooks/gitleaks-docker.sh
+  language: script
+  require_serial: true
+  args: []
+
+- id: hadolint-docker
+  name: hadolint-docker
+  description: Lint Dockerfiles for best practices and security (Docker)
+  entry: docker-hooks/hadolint-docker.sh
+  language: script
+  require_serial: true
+  files: (Dockerfile|\.dockerfile)$
+  args: []
+
+- id: shellcheck-docker
+  name: shellcheck-docker
+  description: Static analysis for shell scripts (Docker)
+  entry: docker-hooks/shellcheck-docker.sh
+  language: script
+  require_serial: true
+  files: \.sh$
+  args: []
+
+- id: yamllint-docker
+  name: yamllint-docker
+  description: Lint YAML files for syntax and style (Docker)
+  entry: docker-hooks/yamllint-docker.sh
+  language: script
+  require_serial: true
+  files: (\.yml|\.yaml)$
+  args: []
+
+- id: kubescore-docker
+  name: kubescore-docker
+  description: Static code analysis for Kubernetes object definitions (Docker)
+  entry: docker-hooks/kubescore-docker.sh
+  language: script
+  require_serial: true
+  files: (\.yml|\.yaml)$
+  args: []
+
+- id: trivy-fs-docker
+  name: trivy-fs-docker
+  description: Scan filesystem for vulnerabilities with Trivy (Docker)
+  entry: docker-hooks/trivy-docker.sh
+  language: script
+  require_serial: true
+  args: ['--fs']
+
+- id: trivy-image-docker
+  name: trivy-image-docker
+  description: Scan container images for vulnerabilities with Trivy (Docker)
+  entry: docker-hooks/trivy-docker.sh
+  language: script
+  require_serial: true
+  args: ['--image']
+
+- id: checkov-docker
+  name: checkov-docker
+  description: Scan Infrastructure as Code for security and compliance issues (Docker)
+  entry: docker-hooks/checkov-docker.sh
+  language: script
+  require_serial: true
+  files: (\.yml|\.yaml|\.tf|\.json|Dockerfile)$
+  args: []

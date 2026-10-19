@@ -1,0 +1,69 @@
+# Local test configuration for Docker-based pre-commit hooks
+# This config uses Docker containers to run tools without local installation
+
+default_stages: [pre-commit]
+
+repos:
+  # Use local Docker-based hooks
+  - repo: local
+    hooks:
+      # Secret scanning (critical)
+      - id: gitleaks-docker
+        name: gitleaks-docker
+        entry: ../docker-hooks/gitleaks-docker.sh
+        language: script
+        pass_filenames: true
+        args: ['--source']
+      
+      # YAML validation
+      - id: yamllint-docker
+        name: yamllint-docker
+        entry: ../docker-hooks/yamllint-docker.sh
+        language: script
+        files: (\.yml|\.yaml)$
+        pass_filenames: true
+        args: ['-s']
+      
+      # Shell script analysis
+      - id: shellcheck-docker
+        name: shellcheck-docker
+        entry: ../docker-hooks/shellcheck-docker.sh
+        language: script
+        files: \.sh$
+        pass_filenames: true
+        args: ['-s', 'warning']
+      
+      # Dockerfile linting
+      - id: hadolint-docker
+        name: hadolint-docker
+        entry: ../docker-hooks/hadolint-docker.sh
+        language: script
+        files: (Dockerfile|\.dockerfile)$
+        pass_filenames: true
+        args: ['-f', 'tty']
+      
+      # Kubernetes best practices
+      - id: kubescore-docker
+        name: kubescore-docker
+        entry: ../docker-hooks/kubescore-docker.sh
+        language: script
+        files: (\.yml|\.yaml)$
+        pass_filenames: true
+        args: ['-o', 'human']
+      
+      # Filesystem vulnerability scanning
+      - id: trivy-fs-docker
+        name: trivy-fs-docker
+        entry: ../docker-hooks/trivy-docker.sh
+        language: script
+        pass_filenames: true
+        args: ['--fs', '-s', 'CRITICAL,HIGH']
+      
+      # IaC security scanning
+      - id: checkov-docker
+        name: checkov-docker
+        entry: ../docker-hooks/checkov-docker.sh
+        language: script
+        files: (\.yml|\.yaml|\.tf)$
+        pass_filenames: true
+        args: ['-f', 'kubernetes', '-c']
